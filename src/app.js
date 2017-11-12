@@ -12,10 +12,11 @@ app.use(bodyParser.json())
 // for security allow a server to be hosted on a different domain.
 app.use(cors())
 
-app.get('/status', (req, res) => {
+app.post('/register', (req, res) => {
   res.send(
     {
-      message: 'Hello there!'
+      // message: `your user was register there! with ${req.body.email}`
+      message: `your user was register there! with ${req.body.email}`
     }
   )
 })
