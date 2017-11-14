@@ -3,6 +3,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+// adding sequelize
+const {sequelize} = require('./models')
+const config = require('./config/config')
 
 const app = express()
 
@@ -12,13 +15,14 @@ app.use(bodyParser.json())
 // for security allow a server to be hosted on a different domain.
 app.use(cors())
 
-app.post('/register', (req, res) => {
-  res.send(
-    {
-      // message: `your user was register there! with ${req.body.email}`
-      message: `your user was register there! with ${req.body.email}`
-    }
-  )
-})
+require('./routes')(app)
 
-app.listen(process.env.PORT || 8081)
+sequelize.sync()
+  .then(() => {
+    app.listen(process.env.PORT || 8081)
+    console.log(`Server started on port ${config.port}`)
+  }
+
+)
+
+//app.listen(process.env.PORT || 8081)
