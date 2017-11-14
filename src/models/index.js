@@ -17,8 +17,10 @@ fs
     file !== 'index.js'
   )
   .forEach((file) => {
+    console.log(`inside forEach loop ${file}`)
     const model = sequelize.import(path.join(__dirname, file))
-    db.User = model
+    db[model.name] = model
+    console.log(`hey ${model.name}`)
   })
 
 db.sequelize = sequelize
